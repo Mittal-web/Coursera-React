@@ -1,14 +1,49 @@
 import React, { Component } from 'react'
-import { Navbar, NavbarBrand } from 'reactstrap';
+import { Navbar, NavbarBrand, Nav, NavbarToggler, Collapse, NavItem } from 'reactstrap';
+import { NavLink } from 'react-router-dom'
 
 
 export default class HeaderComponent extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            isNavOpen: false
+        };
+        this.toggleNav = this.toggleNav.bind(this);
+    }
+
+    toggleNav() {
+        this.setState({
+            isNavOpen: !this.state.isNavOpen
+        })
+    }
     render() {
         return (
-            <div>
-                <Navbar className="navbar-dark">
-                    <div className='container'>
-                        <NavbarBrand href='/'>Ristorante Con Fusion </NavbarBrand>
+            <div >
+                <Navbar dark expand='md' >
+                    <div className='container' style={{ display: 'flex' }}>
+                        <NavbarBrand className='mr-auto' href='/home'>
+                            <img src="assets/images/logo.png" height='30' width='41' alt='Ristorante Con Fusion' />
+                        </NavbarBrand>
+                        <NavbarToggler onClick={this.toggleNav} />
+                        <Collapse isOpen={this.state.isNavOpen} navbar>
+                            <Nav navbar>
+                                <NavItem style={{ display: 'flex' }}>
+                                    <NavLink className='nav-link' to='/home'>
+                                        <span className='fa fa-home fa-lg'></span> Home
+                                    </NavLink>
+                                    <NavLink className='nav-link' to='/aboutus'>
+                                        <span className='fa fa-info fa-lg'></span> AboutUs
+                                    </NavLink>
+                                    <NavLink className='nav-link' to='/menu'>
+                                        <span className='fa fa-list fa-lg'></span> Menu
+                                    </NavLink>
+                                    <NavLink className='nav-link' to='/contactus'>
+                                        <span className='fa fa-list fa-lg'></span> ContactUs
+                                    </NavLink>
+                                </NavItem>
+                            </Nav>
+                        </Collapse>
                     </div>
                 </Navbar>
                 <div className='text-white jumbotron'>
