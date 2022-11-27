@@ -14,16 +14,18 @@ class CommentForm extends Component {
       isModalOpen: false,
     }
     this.toggleModal = this.toggleModal.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this)
   }
   toggleModal() {
     this.setState({
       isModalOpen: !this.state.isModalOpen
     })
   }
-  handleSubmit(value) {
+  handleSubmit(values) {
     this.toggleModal();
-    alert("The current state is: " + JSON.stringify(value))
-    console.log(JSON.stringify(value));
+    // alert("The current state is: " + JSON.stringify(value))
+    // console.log(JSON.stringify(value));
+    this.props.addComment(this.props.dishId, values.rating, values.author, values.comment)
   }
   render() {
     return (
@@ -124,7 +126,7 @@ function RenderDish({ dish }) {
     )
   }
 }
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, dishId }) {
   console.log(comments)
   if (comments == null) {
     return (<div></div>);
@@ -153,7 +155,7 @@ function RenderComments({ comments }) {
         {showcomments}
       </ul>
       <ul className='list-unstyled'>
-        <CommentForm />
+        <CommentForm dishId={dishId} addComment={addComment} />
       </ul>
     </div>
   );
@@ -183,7 +185,7 @@ const DishDetail = (props) => {
           </div>
           <div className=" col-12 col-md-7">
             <h2>HiComments</h2>
-            <RenderComments comments={props.comments} />
+            <RenderComments comments={props.comments} addComment={props.addComment} dishId={props.dish.id} />
           </div>
         </div>
       </div>
